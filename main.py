@@ -17,7 +17,7 @@ sun = np.sin(x)
 for index, elem in np.ndenumerate(sun):
     if elem < 0:
         sun[index] = 0
-print(sun)
+print(sum(sun))
 
 # there are eleven cloudy days in July in Cleveland Ohio
 # if it is cloudy, it is cloudy all day.
@@ -34,7 +34,7 @@ average_wind_speed_in_Ohio_in_July = 2.5
 # I'm not sure what standard deviation to use for wind speed.  From looking at a graph I found, it could be as high
 # as 3 m/s. I found some text that suggested it could be as low as 0.4 or even 0.08. we'll go with 1.5 m/s
 wind_speed_standard_deviation = 1.5
-today_wind_speed = random.gauss(average_wind_speed_in_Ohio_in_July, wind_speed_standard_deviation)
+today_wind_speed = abs(random.gauss(average_wind_speed_in_Ohio_in_July, wind_speed_standard_deviation))
 
 wind_cp = 0
 if today_wind_speed > 12:
@@ -71,7 +71,7 @@ for i in range(24):
     # + solar capacity * sunlight[ hour i] * cloudiness factor[hour i] + energy[hour i - 1]
     # - requirement[hour i ]
     if i == 0:
-        constraints += [energy_in_battery[i] == today_wind_speed * wind_cp * wind_power_capacity +
+        constraints += [energy_in_battery[i] == wind_cp * wind_power_capacity +
                         solar_power_capacity * cloudy_factor * sun[i] + starting_energy
                         - cuyahoga_county_energy_requirement[i]]
     else:
